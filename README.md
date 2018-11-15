@@ -17,7 +17,11 @@ PM > update-package Microsoft.CodeDom.Providers.DotNetCompilerPlatform -r
 Клиент Angular 6 Сервер WebAPI+EF6 БД MS SQL Server 2012
 
 a. MS SQL Server 2012 or higher
+
 b. IIS
+
 c. Web API
+
 d. Entity framework 6
+
 e. Angular 6
