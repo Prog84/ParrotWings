@@ -1,0 +1,60 @@
+<section class="section">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header bordered">
+            <div class="header-block">
+              <h3 class="title">Список транзакций / Ваш текущий баланс {{BalancePW}}</h3>
+            </div>
+            <div class="form-inline pull-right m-r-2">
+              <div class="form-group">
+                <input
+                  type="text"
+                  class="form-control"
+                  [placeholder]="searchPlaceholder"
+                  [(ngModel)]="searchValue"
+                >
+              </div>
+              <div class="btn-group" appDropdown>
+                <button type="button" class="btn btn-secondary dropdown-toggle ">
+                  Параметр
+                </button>
+                <div class="dropdown-menu">
+                  <a class="dropdown-item" (click)="changeCriteria('TypeOperation')">Тип</a>
+                  <a class="dropdown-item" (click)="changeCriteria('UserToId')">Получил/Отправил</a>
+                  <a class="dropdown-item" (click)="changeCriteria('SumPw')"> Отправлено</a>
+                  <a class="dropdown-item" (click)="changeCriteria('ResultPw')">Остаток</a>
+                  <a class="dropdown-item" (click)="changeCriteria('TransactionTime')">Дата / Время</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card-block">
+            <table class="table table-striped">
+              <thead>
+                  <tr>
+                      <th>#</th>
+                      <th>Тип</th>
+                      <th>Получатель / Отправитель</th>
+                      <th>Отправлено</th>
+                      <th>Остаток</th>
+                      <th>Дата / Время</th>
+                    </tr>
+              </thead>
+              <tbody>
+                  <tr>
+                      <tr *ngFor="let t of transactions | appFilter:searchValue:searchField; let idx = index">
+                        <th scope="row">{{ idx + 1 }}</th>
+                        <td>{{ t.TypeOperation}}</td>
+                        <td>{{ t.UserToId }}</td>
+                        <td>{{ t.SumPw }}</td>
+                        <td>{{ t.ResultPw }}</td>
+                        <td>{{ t.TransactionTime | date:'dd.MM.yyyy HH:mm:ss' }}</td>
+                    </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>

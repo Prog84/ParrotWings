@@ -44,7 +44,8 @@ namespace ParrotWings.Providers
             ClaimsIdentity cookiesIdentity = await user.GenerateUserIdentityAsync(userManager,
                 CookieAuthenticationDefaults.AuthenticationType);
 
-            AuthenticationProperties properties = CreateProperties(user.UserName);
+            AuthenticationProperties properties = CreateProperties(user.UserName, user.Name);
+           
             AuthenticationTicket ticket = new AuthenticationTicket(oAuthIdentity, properties);
             context.Validated(ticket);
             context.Request.Context.Authentication.SignIn(cookiesIdentity);
@@ -56,6 +57,7 @@ namespace ParrotWings.Providers
             {
                 context.AdditionalResponseParameters.Add(property.Key, property.Value);
             }
+            context.AdditionalResponseParameters.Add("userID", context.Identity.GetUserId());
 
             return Task.FromResult<object>(null);
         }
@@ -86,11 +88,12 @@ namespace ParrotWings.Providers
             return Task.FromResult<object>(null);
         }
 
-        public static AuthenticationProperties CreateProperties(string userName)
+        public static AuthenticationProperties CreateProperties(string userName, string Name)
         {
             IDictionary<string, string> data = new Dictionary<string, string>
             {
-                { "userName", userName }
+                { "userName", userName },
+                 {"Name", Name}
             };
             return new AuthenticationProperties(data);
         }

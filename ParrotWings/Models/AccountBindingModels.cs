@@ -44,10 +44,15 @@ namespace ParrotWings.Models
         [Display(Name = "Пароль")]
         public string Password { get; set; }
 
-        [DataType(DataType.Password)]
+        [Required]
+        [StringLength(100, ErrorMessage = "Значение {0} должно содержать не менее {2} символов.", MinimumLength = 1)]
+        // [DataType(DataType.)]
+        [Display(Name = "Имя")]
+        public string Name { get; set; }
+        /*[DataType(DataType.Password)]
         [Display(Name = "Подтверждение пароля")]
         [Compare("Password", ErrorMessage = "Пароль и его подтверждение не совпадают.")]
-        public string ConfirmPassword { get; set; }
+        public string ConfirmPassword { get; set; }*/
     }
 
     public class RegisterExternalBindingModel

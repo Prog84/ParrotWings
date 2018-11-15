@@ -1,0 +1,68 @@
+<section class="section">
+  <div class="row text-center" *ngIf="!isLoaded">
+   Загрузка ...
+  </div>
+</section>
+<section class="section"  *ngIf="isLoaded">
+    <div class="col-md-6 col-md-offset-3">
+  <div class="card">
+  <div class="card-header bordered">
+    <div class="header-block">
+      <h3 class="title">Отправить PW / Ваш баланс {{BalancePW}} </h3>
+    </div>
+  </div>
+  <div class="card-block">
+     <div class="alert alert-{{message.type}}"
+      *ngIf="message.text"
+    >{{message.text}}</div>
+    <form #f="ngForm" (ngSubmit)="onSubmit(f)">
+      <div class="form-group">
+        <label class="control-label" for="user">Выберите пользователя</label>
+        <select
+          class="form-control"
+          id="user"
+          [(ngModel)]="currentUserId"
+          required
+          [ngModelOptions]="{standalone: true}"
+          name="user" 
+        >
+          <option
+            *ngFor="let u of users"
+            [value]="u.Id"
+          >
+            {{u.Name}}
+          </option>
+        </select>
+      </div>
+      <div
+        class="form-group"
+        [ngClass]="{'has-error': amount.invalid && amount.touched}"
+      >
+        <label class="control-label" for="amount">Введите сумму</label>
+        <input
+          type="number"
+          id="amount"
+          class="form-control"
+          name="amount"
+          [ngModel]="1"
+          min="1"
+          #amount="ngModel"
+          required
+        >
+        <span
+          class="form-help-text"
+          *ngIf="amount.invalid && amount.touched"
+        >
+          Поле обязательно для заполнения
+        </span>
+      </div>
+      <button
+        type="submit"
+        class="btn btn-primary"
+        [disabled]="f.invalid"
+      >Отправить</button>
+    </form>
+  </div>
+</div>
+    </div>
+</section>
