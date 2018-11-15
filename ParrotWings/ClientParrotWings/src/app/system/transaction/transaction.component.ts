@@ -42,15 +42,24 @@ export class TransactionComponent implements OnInit, OnDestroy {
     let {amount} = form.value;
     if (amount <= this.BalancePW)
     {
-      let now: Date = new Date();
-      const transaction = new Transaction(this.userID, this.credit, this.currentUserId, amount, now);
-      this.dataService.addTransaction(transaction)
-      .subscribe((BalancePW: string) =>{
-        this.BalancePW = BalancePW;
-        this.message.text = "Транзакция успешно проведена.";
-        this.message.type = 'success';
-        window.setTimeout(() => this.message.text = '', 5000)
-      });  
+      if (this.currentUserId != "")
+      {
+        let now: Date = new Date();
+        const transaction = new Transaction(this.userID, this.credit, this.currentUserId, amount, now);
+        this.dataService.addTransaction(transaction)
+        .subscribe((BalancePW: string) =>{
+          this.BalancePW = BalancePW;
+          this.message.text = "Транзакция успешно проведена.";
+          this.message.type = 'success';
+          window.setTimeout(() => this.message.text = '', 5000)
+        }); 
+      } 
+      else 
+      {
+        this.message.text = "Не выбран получатель транзакции.";
+        this.message.type = 'danger';
+        window.setTimeout(() => this.message.text = '', 5000);
+      }
     }
     else 
     {
